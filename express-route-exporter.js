@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 const app = require("./app");
 
-# Top level API definition values
+// Top level API definition values
 const baseApiDef = {
   "openapi": "3.0.2",
   "info": {
@@ -9,7 +10,7 @@ const baseApiDef = {
   }
 }
 
-# Templates applied to each route by http method to create an API definition path
+// Templates applied to each route by http method to create an API definition path
 const templates = {
   default: {
     // operationId: "",
@@ -32,7 +33,7 @@ const templates = {
   }
 }
 
-# Create an array of routes
+// Create an array of routes
 let route, routes = [];
 app._router.stack.forEach(function(middleware){
   if(middleware.route){ // routes registered directly on the app
@@ -48,7 +49,7 @@ app._router.stack.forEach(function(middleware){
 // console.debug(JSON.stringify(routes, null, 2));
 // exit(0)
 
-# Convert routes to API spec paths
+// Convert routes to API spec paths
 const paths = {}
 // console.debug( JSON.stringify(routes, null, 2) );
 routes.forEach(route => {
@@ -62,9 +63,9 @@ routes.forEach(route => {
   paths[route.path] = methods;
 });
 
-# Construct API definition object
+// Construct API definition object
 const apiDef = baseApiDef;
 apiDef.paths = paths;
 
-# Output API definition as JSON
+// Output API definition as JSON
 console.debug(JSON.stringify(apiDef, null, 2));
